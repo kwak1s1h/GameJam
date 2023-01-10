@@ -5,17 +5,27 @@ using UnityEngine;
 
 public class Planet : MonoBehaviour
 {
-    public float OnPlanetDistance;
-    public float Gravity;
+    public float OnPlanetDistance = 3.15f;
+    public float Gravity = 0.1f;
     public bool OnLeft = false;
 
-    [SerializeField] private float _gravityArea = 3f;
+    public Planet NextPlanet = null;
+
+    [SerializeField] private float _gravityArea = 6f;
 
     private PlayerMovement player;
+    private Rigidbody2D playerRigid;
+    [SerializeField] private float radius = 1.5f;
 
     private void Start()
     {
         player = GameManager.Instance.Player;
+        playerRigid = player.GetComponent<Rigidbody2D>();
+
+        transform.localScale = Vector3.one * (radius * 2f);
+        OnPlanetDistance = (radius * 2f) + (radius * 2f) * 0.05f;
+        _gravityArea = radius * 4f;
+        Gravity = 1 + (radius - 1.5f) * 0.5f;
     }
     
     private void Update()
@@ -29,18 +39,19 @@ public class Planet : MonoBehaviour
         if(Vector2.Distance(transform.position, player.transform.position) <= OnPlanetDistance && player.NextPlanet == this)
         {
             player.NowPlanet = this;
-            player.NextPlanet = null;
         }
     }
 
     private void ApplyGravity()
     {
-        
         if(Vector2.Distance(transform.position, player.transform.position) <= _gravityArea && player.NextPlanet == this && !player.OnPlanet)
         {
-            player.GetComponent<Rigidbody2D>().velocity = (transform.position - player.transform.position) * Gravity;
+            playerRigid.velocity = (Vector2)(transform.position - player.transform.position).normalized * Gravity;
         }
-        else player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        if(Vector2.Distance(transform.position, player.transform.position) > _gravityArea && player.NextPlanet == this)
+        {
+            playerRigid.velocity = Vector2.zero;
+        }
     }
 
 #if UNITY_EDITOR
