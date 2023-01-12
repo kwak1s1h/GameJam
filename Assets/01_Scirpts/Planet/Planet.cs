@@ -21,11 +21,11 @@ public class Planet : MonoBehaviour
     {
         player = GameManager.Instance.Player;
         playerRigid = player.GetComponent<Rigidbody2D>();
+    }
 
-        transform.localScale = Vector3.one * (radius * 2f);
-        OnPlanetDistance = (radius * 2f) + (radius * 2f) * 0.05f;
-        _gravityArea = radius * 4f;
-        Gravity = 1 + (radius - 1.5f) * 0.5f;
+    private void OnEnable()
+    {
+        GetComponent<Animator>().SetFloat("Type", UnityEngine.Random.Range(0f, 1f));
     }
     
     private void Update()
@@ -52,6 +52,15 @@ public class Planet : MonoBehaviour
         {
             playerRigid.velocity = Vector2.zero;
         }
+    }
+
+    public void Init(float radius)
+    {
+        this.radius = radius;
+        transform.localScale = Vector3.one * radius * 2f;
+        OnPlanetDistance = (radius * 2f) + (radius * 2f) * 0.05f;
+        _gravityArea = radius * 4f;
+        Gravity = 1 + (radius - 1.5f) * 0.5f;
     }
 
 #if UNITY_EDITOR

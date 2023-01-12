@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2961131627632850541}
   - component: {fileID: 2961131627632850546}
   - component: {fileID: 2961131627632850540}
+  - component: {fileID: 1407478239}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -1735571678, guid: 41f5b451bc52195498a5e97c06371fb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,7 +98,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009412b310f5b3c489bb80854589a992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlanetDistance: 2
+  OnPlanetDistance: 4
   Gravity: 0
   OnLeft: 0
+  NextPlanet: {fileID: 0}
   _gravityArea: 3
+  radius: 1.5
+--- !u!95 &1407478239
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2961131627632850547}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7291368d7a53b6d4d8af02c27ce3b7a4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

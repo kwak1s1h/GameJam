@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 4642fdace4ce0c14db719dbae48b3b96
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - KIMM_Light
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1166e7acc23ea904e811b501c30ac681, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

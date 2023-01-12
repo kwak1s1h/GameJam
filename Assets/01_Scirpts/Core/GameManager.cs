@@ -1,10 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
+    private PlanetManager planetManager;
+
+    public bool OnPlay;
+
     public static GameManager Instance
     {
         get 
@@ -16,6 +24,8 @@ public class GameManager : MonoBehaviour
     }
 
     private PlayerMovement _player = null;
+    [SerializeField] private TextMeshProUGUI viewBestPoint;
+
     public PlayerMovement Player
     {
         get 
@@ -34,6 +44,51 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         instance = this;
-        DontDestroyOnLoad(this);
+        planetManager = GetComponent<PlanetManager>();
+
+        if(GetBestPoint() > 0)
+        viewBestPoint.text = $"최고 점수 : {GetBestPoint()}";
+    }
+
+    public void GameOver()
+    {
+        OnPlay = false;
+        if(PlayerPrefs.GetInt("Point", 0) < planetManager.Count)
+            PlayerPrefs.SetInt("Point", planetManager.Count);
+        Debug.Log("gameOver");
+        RePlay();
+    }
+
+    public void GameOff() => Application.Quit();
+
+    public void LoadScene(string sceneName) => SceneManager.LoadScene(sceneName);
+
+    public void SetTimeScaleZero(int x) => Time.timeScale = x;
+
+    public int GetBestPoint() => PlayerPrefs.GetInt("Point", 0);
+
+    public void RePlay()
+    {
+        planetManager.Reset();
+        planetManager.Retry();
+    }
+
+    private IEnumerator PostLevel()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("username", "testNode");
+        form.AddField("level", PlanetManager.Instance.Count);
+
+        UnityWebRequest www = UnityWebRequest.Post("https://localhost:9090/record", form);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log("Form upload complete!");
+        }
     }
 }
