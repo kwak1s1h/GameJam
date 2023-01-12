@@ -44,6 +44,7 @@ public class PlanetManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI countUI = null;
     [SerializeField] private TextMeshProUGUI newText;
+    [SerializeField] private AudioClip ingameBGM;
 
     private void Awake()
     {
@@ -63,7 +64,12 @@ public class PlanetManager : MonoBehaviour
         Transform canvas = GameObject.Find("Canvas").transform;
         canvas.Find("Title").GetComponent<RectTransform>().DOAnchorPosY(300f, 0.5f).SetEase(Ease.OutQuart);
         canvas.Find("showBest").GetComponent<RectTransform>().DOAnchorPosY(100f, 0.4f).SetEase(Ease.OutQuart);
-        canvas.Find("StartBtn").GetComponent<RectTransform>().DOAnchorPosY(-400f, 1f).SetEase(Ease.OutQuart).OnComplete(() => Init());
+        canvas.Find("StartBtn").GetComponent<RectTransform>().DOAnchorPosY(-400f, 1f).SetEase(Ease.OutQuart).OnComplete(() => {
+            AudioSource source = GameObject.Find("BG").GetComponent<AudioSource>();
+            source.clip = ingameBGM;
+            source.Play();
+            Init();
+        });
     }
 
     public void Retry()
@@ -93,6 +99,7 @@ public class PlanetManager : MonoBehaviour
     private void Init()
     {
         Destroy(GameObject.Find("Planet"));
+        
         for(int i = 0; i < 10; i++)
         {
             CreatePlanet(i);

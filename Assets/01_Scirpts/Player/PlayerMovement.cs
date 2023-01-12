@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 150f;
 
+    [SerializeField] AudioClip touchSound;
+
     [SerializeField] private Vector2 _center = Vector2.zero;
     [SerializeField] private float _distance = 1.2f;
     private float _timer = 0f;
@@ -29,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
             onPlanet = value;
             if(!onPlanet)
             {
+                GameManager.Instance.CreateEffect();
+                GameManager.Instance.audioSource.clip = touchSound;
+                GameManager.Instance.audioSource.Play();
                 Debug.Log("Fire");
             }
         } 

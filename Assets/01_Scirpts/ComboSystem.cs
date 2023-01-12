@@ -22,7 +22,7 @@ public class ComboSystem : MonoBehaviour
         if(count >= 1) comboTxt.gameObject.SetActive(true);
         comboTxt.text = $"{count} combo";
         if(count != 0)
-            GameManager.Instance.Player.speed += 7.5f;
+            GameManager.Instance.Player.speed += 5f;
         Debug.Log(count);
     }
 
